@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script for replacing the value in the api_key.txt file with <API_KEY> literal (post-commit part).
+SCRIPT_NAME="API Key Removal (post-commit)"
+API_KEY_VALUE=`cat api_key.txt`
+
+printf "[$SCRIPT_NAME] Replacing dummy tag with actual API key...\n"
+sed -i '' 's/<API_KEY>/1g1kpre3NDxl8CsCzqRrGA/g' content.js
+printf "[$SCRIPT_NAME] Staging replacement (needed to avoid merge conflict)...\n"
+git add content.js
+printf "[$SCRIPT_NAME] Un-stashing the changes unstaged before the commit...\n"
+git stash pop
+printf "[$SCRIPT_NAME] End post-commit hook.\n"

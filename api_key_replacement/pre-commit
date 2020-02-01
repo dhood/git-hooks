@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script for replacing the value in the api_key.txt file with <API_KEY> literal (pre-commit part).
+SCRIPT_NAME="API Key Removal (pre-commit)"
+API_KEY_VALUE=`cat api_key.txt`
+
+printf "[$SCRIPT_NAME] Stashing changes that have not been staged...\n"
+git stash save --keep-index
+printf "[$SCRIPT_NAME] Replacing API key with dummy tag...\n"
+sed -i '' "s/${API_KEY_VALUE}/<API_KEY>/g" content.js
+printf "[$SCRIPT_NAME] Adding replacement to staging...\n"
+git add content.js
+printf "[$SCRIPT_NAME] End pre-commit hook\n"
