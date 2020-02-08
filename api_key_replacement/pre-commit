@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Script for replacing the value in the api_key.txt file with <API_KEY> literal (pre-commit part).
 SCRIPT_NAME="API Key Removal (pre-commit)"
