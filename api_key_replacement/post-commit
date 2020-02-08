@@ -5,6 +5,13 @@ set -e
 SCRIPT_NAME="API Key Removal (post-commit)"
 API_KEY_VALUE=`cat api_key.txt`
 
+# Do not run hook if not on a branch, e.g. during rebase
+BRANCH_NAME=$(git branch | grep '*' | sed 's/* //') 
+if [[ $BRANCH_NAME == *"no branch"* ]]
+then
+  exit 0;
+fi
+
 printf "[$SCRIPT_NAME] Replacing dummy tag with actual API key...\n"
 sed -i '' 's/<API_KEY>/1g1kpre3NDxl8CsCzqRrGA/g' content.js
 printf "[$SCRIPT_NAME] Staging replacement (needed to avoid merge conflict)...\n"

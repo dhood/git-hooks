@@ -5,6 +5,14 @@ set -e
 SCRIPT_NAME="API Key Removal (pre-commit)"
 API_KEY_VALUE=`cat api_key.txt`
 
+
+# Do not run hook if not on a branch, e.g. during rebase
+BRANCH_NAME=$(git branch | grep '*' | sed 's/* //') 
+if [[ $BRANCH_NAME == *"no branch"* ]]
+then
+  exit 0;
+fi
+
 printf "[$SCRIPT_NAME] Stashing changes that have not been staged...\n"
 git stash save --keep-index
 printf "[$SCRIPT_NAME] Replacing API key with dummy tag...\n"
